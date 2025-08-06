@@ -2,37 +2,28 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { UploadDialog } from "./_components/upload-dialog";
+import { getMyNotes } from "~/server/queries";
+
+export const dynamic = "force-dynamic"; 
+
 
 async function Images() {
 
-  const mockUrls = [
-    "https://static1.srcdn.com/wordpress/wp-content/uploads/2023/03/kafka-shouting-in-kaiju-no-8.jpg",
-    "https://picsum.photos/seed/picsum/800/600",
-    "https://picsum.photos/seed/picsum2/800/600",
-    "https://wallpaperbat.com/img/57973342-artstation-kaiju-no-8.jpg",
-    "https://static1.srcdn.com/wordpress/wp-content/uploads/2023/03/kafka-shouting-in-kaiju-no-8.jpg",
-    "https://tse3.mm.bing.net/th/id/OIP.qHLZUHo8OovlJ0HbQ-QumgHaEK?pid=Api&P=0&h=180",
-  ];
-
-  const images = mockUrls.map((url, index) => ({
-    id: index + 1,
-    url,
-  }));
-
+ const notes = await getMyNotes();
   return (
     <div>
       <UploadDialog />
       <div className="flex flex-wrap justify-center gap-6 p-4">
-        {images.map((image) => (
-          <div key={image.id} className="w-64 flex flex-col">
+        {notes.map((note) => (
+          <div key={note.id} className="w-64 flex flex-col">
             <div className="relative aspect-video bg-zinc-900 overflow-hidden">
               <img
-                src={image.url}
-                alt={`Image ${image.id}`}
+                src={note.imageUrl}
+                alt={`Image ${note.id}`}
                 className="h-full w-full object-contain object-center"
               />
             </div>
-            <div className="text-center mt-2 text-white">{image.id}</div>
+            <div className="text-center mt-2 text-white">{note.id}</div>
           </div>
         ))}
       </div>
@@ -40,9 +31,9 @@ async function Images() {
 
   );
 
-}
+};
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <main className="">
       <SignedOut>
