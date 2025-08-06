@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { db } from "~/server/db";
-import { images } from "~/server/db/schema";
+import { notes } from "~/server/db/schema";
 
 const f = createUploadthing();
 
@@ -38,7 +38,7 @@ export const ourFileRouter = {
 
       console.log("file url", file.ufsUrl);
 
-      await db.insert(images).values({
+      await db.insert(notes).values({
         filename: file.name,
         imageUrl: file.ufsUrl,
         userId: metadata.userId,

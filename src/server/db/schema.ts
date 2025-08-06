@@ -11,11 +11,11 @@ import { index, pgTableCreator } from "drizzle-orm/pg-core";
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = pgTableCreator(
-  (name) => `ipt-3aguintu-gallery_${name}`,
+  (name) => `ipt-prelims_${name}`,
 );
 
-export const images = createTable(
-  "image",
+export const notes = createTable(
+  "note",
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
     filename: d.varchar({ length: 256 }),
