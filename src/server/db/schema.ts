@@ -19,6 +19,7 @@ export const notes = createTable(
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
     filename: d.varchar({ length: 256 }),
+    imageName: d.varchar({ length: 256 }),
     imageUrl: d.varchar({ length: 1200 }).notNull(),
     userId: d.varchar({ length: 64 }).notNull(),
     createdAt: d
