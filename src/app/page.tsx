@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
 
 async function Images() {
 
- const notes = await getMyNotes();
+ const notes = await getMyNotes(); // Fetching notes from the server
+
   return (
     <div>
       <UploadDialog />

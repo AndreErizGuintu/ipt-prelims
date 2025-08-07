@@ -47,7 +47,7 @@ export const ourFileRouter = {
 
       await db.insert(notes).values({
         imageName: metadata.imageName,
-        description: metadata.description, // ✅ Add thi
+        description: metadata.description,
         filename: file.name,
         imageUrl: file.ufsUrl,
         userId: metadata.userId,

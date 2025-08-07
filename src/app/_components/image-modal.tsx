@@ -15,6 +15,7 @@ import {
 import { DeleteButton } from "./delete-button";
 import { notes } from "~/server/db/schema";
 
+
 interface ImageModalProps {
     image: {
         id: number;
@@ -35,6 +36,8 @@ export function ImageModal({ image, children }: ImageModalProps) {
     );
     const [isLoading, setIsLoading] = useState(false);
     const { user } = useUser();
+    const [forceRefresh, setForceRefresh] = useState(0);
+
 
     useEffect(() => {
         if (isOpen && !uploaderInfo) {
@@ -109,7 +112,7 @@ export function ImageModal({ image, children }: ImageModalProps) {
                                     <span>{new Date(image.createdAt).toLocaleDateString()}</span>
                                 </div>
 
-                                <div className="">
+                                <div className="space-y-2">
                                     <DeleteButton idAsNumber={image.id} />
                                 </div>
                             </div>

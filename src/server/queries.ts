@@ -39,3 +39,4 @@ export async function deleteNote(Id: number) {
   .where(and(eq(notes.id, Id),
   eq(notes.userId, user.userId)));
 }
+
