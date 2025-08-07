@@ -21,12 +21,17 @@ import { UploadButton, useUploadThing } from "~/utils/uploadthing";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { Textarea } from "~/components/ui/textarea";
 
 const formSchema = z.object({
   ImageName: z
     .string()
     .min(5, { message: "Image Name must be at least 5 Characterss long" })
     .max(50),
+  Description: z
+    .string()
+    .min(10, { message: "Description must be at least 10 characters long" })
+    .max(200),
 })
 
 export function UploadDialog() {
@@ -36,6 +41,7 @@ export function UploadDialog() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       ImageName: "",
+      Description: "",
     },
   });
 
@@ -93,6 +99,7 @@ export function UploadDialog() {
     const selectedImage = Array.from(inputRef.current.files);
     await startUpload(selectedImage, {
       imageName: form.getValues("ImageName"),
+      description: form.getValues("Description"),
     });
     setSelectedImageName(null);
     setSelectedImageUrl(null);
@@ -186,6 +193,23 @@ export function UploadDialog() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="Description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Add a short description..." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This description will be visible to others.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
               <Button type="submit" disabled={isUploading}>Submit</Button>
             </DialogFooter>

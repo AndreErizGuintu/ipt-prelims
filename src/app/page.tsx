@@ -3,6 +3,7 @@ import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { UploadDialog } from "./_components/upload-dialog";
 import { getMyNotes } from "~/server/queries";
+import { ImageModal } from "./_components/image-modal";
 
 export const dynamic = "force-dynamic"; 
 
@@ -16,14 +17,16 @@ async function Images() {
       <div className="flex flex-wrap justify-center gap-6 p-4">
         {notes.map((note) => (
           <div key={note.id} className="w-64 flex flex-col">
-            <div className="relative aspect-video bg-zinc-900 overflow-hidden">
-              <img
-                src={note.imageUrl}
-                alt={`Image ${note.id}`}
-                className="h-full w-full object-contain object-center"
-              />
-            </div>
-            <div className="text-center mt-2 text-white">{note.id}</div>
+            <ImageModal image={note}>
+              <div className="relative aspect-video bg-zinc-900 overflow-hidden">
+                <img
+                  src={note.imageUrl}
+                  alt={`Image ${note.id}`}
+                  className="h-full w-full object-contain object-center"
+                />
+              </div>
+            </ImageModal>
+            <div className="text-center mt-2 text-white">{note.imageName}</div>
           </div>
         ))}
       </div>
