@@ -3,9 +3,9 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@c
 // Top navigation bar component
 export default function TopNav() {
     return (
-        <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
+        <nav className="bg-yellow-900 p-4 text-white flex justify-between items-center">
             {/* App title */}
-            <div>IT315</div>
+            <div>NOTE.ME</div>
             <div>
                 {/* Show user button if signed in */}
                 <SignedIn>

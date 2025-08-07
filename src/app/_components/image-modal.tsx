@@ -63,38 +63,52 @@ export function ImageModal({ image, children }: ImageModalProps) {
     }, [isOpen, uploaderInfo, image.userId]);
 
     return (
-        <div>
-            <div onClick={() => setIsOpen(true)} className="cursor-pointer">
-                {children}
-            </div>
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="min-h-[90vh] min-w-[90vw] overflow-hidden p-0">
-                    <div className="flex h-full flex-col md:flex-row">
-                        {/* Image Container */}
-                        <div className="flex flex-1 items-center justify-center bg-black p-4">
-                            <img
-                                src={image.imageUrl}
-                                alt={String(image.id)}
-                                className="max-h-full max-w-full object-contain"
-                            />
-                        </div>
-                        {/* Details Container */}
-                        <div className="flex w-full flex-col md:w-80 bg ">
-                            <DialogHeader className="border-b p-4">
-                                <DialogTitle className="text-center">
-                                    {image.imageName || image.filename}
-                                </DialogTitle>
-                            </DialogHeader>
+<div>
+  <div onClick={() => setIsOpen(true)} className="cursor-pointer">
+    {children}
+  </div>
+  <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <DialogContent className="flex flex-col h-[85vh] max-w-[500px] p-0 bg-yellow-50 border-2 border-black overflow-hidden shadow-lg">
+      {/* Notepad Header with holes */}
+      <div className="bg-yellow-100 border-b-2 border-black p-3 flex items-center">
+        <div className="flex space-x-2 mr-3">
+          <div className="w-3 h-3 bg-gray-400 rounded-full border border-gray-500"></div>
+          <div className="w-3 h-3 bg-gray-400 rounded-full border border-gray-500"></div>
+        </div>
+        <h2 className="text-xl font-bold uppercase">Image Details</h2>
+      </div>
 
-                            <div className="flex flex-1 flex-col space-y-4 p-4">
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-medium text-black">
-                                        Uploaded By:
-                                    </span>
-                                    <span>
-                                        {isLoading ? "Loading..." : uploaderInfo?.fullName}
-                                    </span>
-                                </div>
+      {/* Scrollable Content Area with ruled paper effect */}
+      <div className="flex-1 overflow-y-auto relative">
+        {/* Vertical line */}
+        <div className="absolute left-8 top-0 bottom-0 w-px bg-yellow-300"></div>
+
+        <div className="pl-10 pr-4 py-4">
+          {/* Image Display */}
+          <div className="bg-white p-4 mb-4 border-2 border-black flex justify-center items-center min-h-[200px]">
+            <img
+              src={image.imageUrl}
+              alt={String(image.id)}
+              className="max-h-[250px] max-w-full object-contain"
+            />
+          </div>
+
+          {/* Details Section */}
+          <div className="space-y-4">
+            {/* Properties Card */}
+            <div className="bg-white p-4 border-2 border-black rounded-sm shadow-sm">
+              <h3 className="font-bold text-yellow-700 mb-2 border-b border-yellow-200 pb-1">Properties</h3>
+              <ul className="space-y-2 text-black">
+                <li className="flex">
+                  <span className="font-semibold w-28">Uploaded by:</span>
+                  <span>{isLoading ? "Loading..." : uploaderInfo?.fullName} {image.imageName || image.filename}</span>
+                </li>
+                <li className="flex">
+                  <span className="font-semibold w-28">Created:</span>
+                  <span>{new Date(image.createdAt).toLocaleDateString()}</span>
+                </li>
+              </ul>
+            </div>
 
                                 <div className="flex flex-col">
                                     <span className="text-sm font-medium text-black">
@@ -112,7 +126,7 @@ export function ImageModal({ image, children }: ImageModalProps) {
                                     <span>{new Date(image.createdAt).toLocaleDateString()}</span>
                                 </div>
 
-                                <div className="space-y-2">
+                                <div className="">
                                     <DeleteButton idAsNumber={image.id} />
                                 </div>
                             </div>

@@ -136,88 +136,130 @@ export function UploadDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
 
       <DialogTrigger asChild>
-        <Button variant="outline">Upload Notes</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Upload Notes</DialogTitle>
-          <DialogDescription>
-            Upload your notes here.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex flex-col gap-2">
-          {selectedImageUrl !== null && (
-            <div>
-              <img
-                src={selectedImageUrl}
-                alt={selectedImageName || "Selected Image"}
-                className="w-full rounded-md object-cover"
-              />
-            </div>
-          )}
+  <Button 
+    variant="outline"
+    className="
+      bg-yellow-50
+      border border-gray-400
+      text-gray-800
+      hover:bg-yellow-100
+      hover:border-gray-600
+      font-normal
+      px-5 py-2
+      top-2
+      right-2
+      absolute
+      shadow-none
+    "
+  >
+    Upload Notes
+  </Button>
+</DialogTrigger>
+      
+     <DialogContent className="sm:max-w-[425px] p-0 bg-yellow-50 border-2 border-black rounded-sm">
+  {/* Notepad Header */}
+  <div className="bg-yellow-100 border-b-2 border-black p-4 flex items-center gap-2">
+    <div className="w-3 h-3 bg-gray-400 rounded-full border border-gray-500"></div>
+    <DialogTitle className="text-gray-800">Upload Notes</DialogTitle>
+  </div>
 
-          <div className="flex items-center gap-2">
-            <Button
-              variant={"outline"}
-              onClick={() => inputRef.current?.click()}
-            >
-              <Upload />
-            </Button>
-            <input
-              type="file"
-              ref={inputRef}
-              className="sr-only"
-              accept="image/"
-              onChange={handleImageSelect}
-            />
-            {setSelectedImageName !== null && (
-              <div>Selected Image: {selectedImageName}</div>
-            )}
-          </div>
+  <div className="p-4 space-y-6">
+    {/* Image Preview Section */}
+    {selectedImageUrl && (
+      <div className="bg-white border-2 border-black p-2">
+        <img
+          src={selectedImageUrl}
+          alt={selectedImageName || "Selected Image"}
+          className="w-full h-40 object-contain mx-auto"
+        />
+      </div>
+    )}
+
+    {/* File Upload Section */}
+    <div className="flex items-center gap-2">
+      <Button
+        variant="outline"
+        onClick={() => inputRef.current?.click()}
+        className="bg-white border-2 border-black hover:bg-yellow-100 rounded-sm"
+      >
+        <Upload className="w-4 h-4 mr-2" />
+        Choose Image
+      </Button>
+      <input
+        type="file"
+        ref={inputRef}
+        className="sr-only"
+        accept="image/*"
+        onChange={handleImageSelect}
+      />
+      {selectedImageName && (
+        <div className="text-sm text-gray-700 truncate max-w-[180px]">
+          {selectedImageName}
         </div>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="ImageName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Image ame" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="Description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Add a short description..." {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This description will be visible to others.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      )}
+    </div>
 
-            <DialogFooter>
-              <Button type="submit" disabled={isUploading}>Submit</Button>
-            </DialogFooter>
-          </form>
-        </Form>
+    {/* Form Section */}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Image Name Field */}
+        <FormField
+          control={form.control}
+          name="ImageName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-gray-800">Note Title</FormLabel>
+              <FormControl>
+                <Input 
+                  placeholder="My important note" 
+                  {...field} 
+                  className="bg-white border-2 border-black rounded-sm focus-visible:ring-yellow-500"
+                />
+              </FormControl>
+              <FormDescription className="text-gray-600 text-xs">
+                What should we call this note?
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        {/* Description Field */}
+        <FormField
+          control={form.control}
+          name="Description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-gray-800">Description</FormLabel>
+              <FormControl>
+                <Textarea 
+                  placeholder="Write your notes here..." 
+                  className="bg-white border-2 border-black rounded-sm min-h-24 max-h-32 focus-visible:ring-yellow-500 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+                  {...field} 
+                />
+              </FormControl>
+              <FormDescription className="text-gray-600 text-xs">
+                Add details about your note
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      </DialogContent>
+        {/* Footer with Submit Button */}
+        <DialogFooter className="border-t-2 border-black pt-4">
+          <Button 
+            type="submit" 
+            disabled={isUploading}
+            className="bg-yellow-600 hover:bg-yellow-700 text-white border-2 border-black rounded-sm"
+          >
+            {isUploading ? "Uploading..." : "Save Note"}
+          </Button>
+        </DialogFooter>
+      </form>
+    </Form>
+  </div>
+</DialogContent>
     </Dialog>
 
   );
