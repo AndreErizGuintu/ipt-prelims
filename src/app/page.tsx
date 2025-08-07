@@ -40,60 +40,104 @@ export default async function HomePage() {
   return (
     <main className="">
       <SignedOut>
-        <div className="min-h-screen h-full w-full relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-          {/* Main content container */}
-          <div className="relative z-10 h-full flex items-center justify-center px-8">
-            <div className="max-w-6xl w-full">
-              {/* Main content */}
-              <div className="flex items-center justify-center">
-                <div className="space-y-8 text-center max-w-2xl flex flex-col items-center justify-center">
-                  <div className="mt-30 mb-8">
-                    <h1 className="text-8xl lg:text-9xl font-light text-gray-200 leading-tight mb-8">
-                      Welcome
-                      <br />
-                      <span className="text-gray-400">To Gallery</span>
-                    </h1>
-                  </div>
-                  <div className="space-y-6 text-gray-400 max-w-md mx-auto">
-                    <p className="leading-relaxed">
-                      Welcome to the world of images enjoy.
-                    </p>
-                    <p className="leading-relaxed">
-                      Please sign in or sign up to continue.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="min-h-screen bg-yellow-50">
+  {/* Notepad Paper */}
+  <div className="relative h-full w-full mx-auto p-8 max-w-6xl">
+    {/* Notepad Binding */}
+    <div className="absolute left-0 top-0 h-full w-8 bg-yellow-200 border-r-2 border-yellow-300 flex flex-col items-center py-8 space-y-6">
+      {[...Array(12)].map((_, i) => (
+        <div key={i} className="w-5 h-1 bg-yellow-400 rounded-full"></div>
+      ))}
+    </div>
+
+    {/* Notebook Holes */}
+    <div className="absolute left-6 top-8 flex flex-col space-y-8">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="w-4 h-4 bg-white border-2 border-yellow-400 rounded-full"></div>
+      ))}
+    </div>
+
+    {/* Main Content */}
+    <div className="ml-12 pl-6 border-l-2 border-yellow-200">
+      {/* Title Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-6xl lg:text-7xl font-serif text-gray-800 mb-4 underline decoration-yellow-300 decoration-wavy">
+          Note.me
+        </h1>
+        <div className="w-full h-0.5 bg-yellow-200 my-6"></div>
+      </div>
+
+      {/* Welcome Content */}
+      <div className="space-y-8">
+        <div className="bg-white p-6 border-2 border-gray-300 shadow-sm">
+          <h2 className="text-3xl font-light text-gray-700 mb-4">
+            Welcome to your digital notebook
+          </h2>
+          <div className="space-y-4 text-gray-600">
+            <p className="leading-relaxed">
+              Capture your thoughts, ideas, and memories in a simple, elegant space.
+            </p>
+            <p className="leading-relaxed">
+              Sign in to access your notes or create an account to get started.
+            </p>
           </div>
         </div>
+
+        {/* Ruled Paper Effect */}
+        <div className="relative bg-white p-6 border-2 border-gray-300">
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-yellow-200"></div>
+          <div className="space-y-6 ml-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-px bg-gray-100"></div>
+            ))}
+          </div>
+          <div className="relative z-10 text-center py-8">
+            <p className="text-gray-500 italic">
+              Your next great idea starts here...
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       </SignedOut>
 
-      <SignedIn>
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8">
-          <div className="max-w-6xl mx-auto">
-            {/*  Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-light text-gray-200 mb-4">
-                Welcome back
-              </h1>
-              <p className="text-gray-400">
-                You are now signed in to your account
-              </p>
+   <SignedIn>
+  <div className="bg-yellow-50 border-l-8 border-yellow-200 p-8 min-h-screen shadow-inner">
+   
 
-            </div>
+ 
 
-            {/* Images Section */}
-            <div className="bg-gray-800 rounded-xl p-6">
+    {/* Header section */}
+    <div className="text-center mb-8 pl-10">
+      <h1 className="text-4xl font-serif font-normal text-gray-800 mb-2 underline decoration-wavy decoration-yellow-300">
+        My Notepad
+      </h1>
+      <p className="text-gray-600 font-mono">
+        Write down your thoughts...
+      </p>
+    </div>
 
-              <Images />
-            </div>
+    {/* Ruled paper effect for content area */}
+    <div className="pl-12 relative">
+      <div className="absolute left-12 top-0 h-full w-px bg-yellow-300"></div>
+      
+      {/* Ruled lines */}
+      <div className="space-y-6">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="h-px bg-yellow-200"></div>
+        ))}
+      </div>
 
-          </div>
-        </div>
-
-      </SignedIn>
+      {/* Content */}
+      <div className="py-4">
+        <Images />
+      </div>
+    </div>
+  </div>
+</SignedIn>
     </main>
   );
 }
