@@ -11,7 +11,7 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Note.Me",
   description: "A simple note-taking app",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/sticky-notes.png" }],
 };
 
 const geist = Geist({
