@@ -1,6 +1,10 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+export default clerkMiddleware(); // Middleware to handle Clerk authentication
+
+// This middleware will run for all routes except those that are explicitly excluded
+// You can customize the matcher to include or exclude specific routes as needed
+// For example, you might want to skip certain API routes or static files
 
 export const config = {
   matcher: [

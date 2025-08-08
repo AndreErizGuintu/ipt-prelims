@@ -18,6 +18,7 @@ async function Images() {
       <div className="flex flex-wrap justify-center gap-6 p-4">
         {notes.map((note) => (
           <div key={note.id} className="w-64 flex flex-col bg-white shadow-md rounded-lg overflow-hidden p-2">
+            // Displaying the image in a modal
             <ImageModal image={note}>
               <div className="relative aspect-video bg-white  overflow-hidden">
                 <img

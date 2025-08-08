@@ -23,95 +23,117 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Textarea } from "~/components/ui/textarea";
 
+
+// Define a Zod schema for form validation
 const formSchema = z.object({
   ImageName: z
     .string()
-    .min(5, { message: "Image Name must be at least 5 Characterss long" })
-    .max(50),
+    .min(5, { message: "Image Name must be at least 5 Characterss long" }) // Minimum 5 characters
+    .max(50), // Maximum 50 characters
   Description: z
     .string()
-    .min(10, { message: "Description must be at least 10 characters long" })
-    .max(200),
-})
+    .min(10, { message: "Description must be at least 10 characters long" }) // Minimum 10 characters
+    .max(200), // Maximum 200 characters
+});
 
 export function UploadDialog() {
+  // State to control whether the dialog is open or closed
   const [open, setOpen] = useState(false);
 
+  // Set up the form with react-hook-form, using the Zod schema for validation
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema), // Apply Zod validation
     defaultValues: {
       ImageName: "",
       Description: "",
     },
   });
 
+  // Router hook from Next.js for navigation and page refresh
   const router = useRouter();
+
+  // Ref to directly access the file input element
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // State to hold the selected image's file name
   const [selectedImageName, setSelectedImageName] = useState<string | null>(null);
+
+  // State to hold the selected image's preview URL
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
+  // Handle file selection from the file input
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      setSelectedImageName(file.name);
-      setSelectedImageUrl(URL.createObjectURL(file));
+    const file = event.target.files?.[0]; // Get the first selected file
+    if (file && file.type.startsWith("image/")) { // Check if it's an image
+      setSelectedImageName(file.name); // Save file name
+      setSelectedImageUrl(URL.createObjectURL(file)); // Generate preview URL
     } else {
+      // Reset states if not an image and show error toast
       setSelectedImageName(null);
       setSelectedImageUrl(null);
       toast.error(`Please select a valid image file.`);
     }
   };
 
+  // Hook from UploadThing to handle image uploads
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
     onUploadBegin: () => {
+      // Show "Uploading..." toast when upload starts
       toast(
         <div className="flex items-center gap-2">
           <span className="text-lg">Uploading...</span>
         </div>,
         {
-          duration: 5000, // Duration in milliseconds
-          id: "upload-begin",
+          duration: 5000, // 5 seconds
+          id: "upload-begin", // ID for dismissing later
         }
       );
     },
 
     onUploadError: () => {
+      // Dismiss "Uploading..." toast and show error
       toast.dismiss("upload-begin");
       toast.error(<span className="text-lg">Upload Error</span>);
     },
 
     onClientUploadComplete: () => {
+      // Dismiss "Uploading..." toast and show success
       toast.dismiss("upload-begin");
       toast.success(<span className="text-lg">Upload Completed</span>);
-      router.refresh(); // Refresh the page to show the new images
+      router.refresh(); // Refresh page to load new images
     },
-
-
-
   });
 
+  // Function to handle the actual upload process
   const handleImageUpload = async () => {
+    // Check if a file is selected
     if (!inputRef.current?.files?.length) {
-      toast.warning(<span className="text-lg">No File Selected</span>)
+      toast.warning(<span className="text-lg">No File Selected</span>);
       return;
     }
 
+    // Convert file list to array
     const selectedImage = Array.from(inputRef.current.files);
+
+    // Start the upload with additional metadata
     await startUpload(selectedImage, {
-      imageName: form.getValues("ImageName"),
-      description: form.getValues("Description"),
+      imageName: form.getValues("ImageName"), // From form input
+      description: form.getValues("Description"), // From form input
     });
+
+    // Clear selected image state
     setSelectedImageName(null);
     setSelectedImageUrl(null);
-  }
+  };
 
-
-
+  // Handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setOpen(false);
-    await handleImageUpload();
+    console.log(values); // Log form values for debugging
+    setOpen(false); // Close the dialog
+    await handleImageUpload(); // Upload the image
   }
+
+
 
 
 
